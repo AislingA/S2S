@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: skirt-batch-job
+  namespace: sdsu-rosen-astro-group 
+spec:
+  template:
+    spec:
+      containers:
+      - name: skirt-runner
+        image: ghcr.io/sdsu-research-ci/astro-notebook@sha256:b790987333dac51a8ea777988bc4bf2b5a09f823819b1419beff51f69075b462
+        command: ["/bin/bash", "-c"]
+        args: 
+          - |
+            echo "Starting batch job..."
+            
+            cd /home/jovyan/BSAS/src
+            
+            SNAPSHOTS=(
+              "../data/snapshot_150.hdf5"
+              "../data/snapshot_200.hdf5"
+              "../data/snapshot_250.hdf5"
+              "../data/snapshot_296.hdf5"
+            )
+            
+            for snap in "${SNAPSHOTS[@]}"; do
+              echo "Processing $snap..."
+              python -m runner.run_sim "$snap" --out_dir ../outputs/
+            done
+            
+            echo "All 4 simulations complete!"
+            
+        resources:
+          limits:
+            memory: "128Gi"
+            cpu: "16"
+          requests:
+            memory: "128Gi"
+            cpu: "16"
+        volumeMounts:
+        - name: storage-volume
+          mountPath: /home/jovyan 
+      restartPolicy: Never
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: shared
+  backoffLimit: 0
