@@ -1,0 +1,65 @@
+# src/config/replacements
+# do this like the documentation and build up the nesting 
+# change quotes to in the ski file
+# so here will just be values with no ""
+# same for units, have the units in the ski file, inclination area
+# can eventually have sep files for each category
+# 
+# --- Simulation Mode ---
+# The following controls the photon count and the type of physics iteration
+simulation_settings:
+    USERLEVEL: "Expert"
+    SIMULATIONMODE: "DustEmission"
+    ITERATE_PRIMARY: "false"
+    ITERATE_SECONDARY: "true"
+    NUMPACKETS: "1e7"
+
+# --- Spatial Grid ---
+# Controls the reolution of the Octree
+# A higher max_level = finer resolution but more memory/time
+grid_settings:
+    MINLEVEL: "6"
+    MAXLEVEL: "12"
+
+# --- Instrument / Camera Positions ---
+# Controls where the "camera" is placed relative to the center of the simulation
+# For inclination: 0 deg = face-on, 90 deg = edge-on
+# for roll: rolls the camera to match cartesian x/y.
+# if this flips the sim the wrong way, set to 90 degrees
+instrument_settings:
+    DISTANCE: "1 kpc"
+    INCLINATION: "0 deg"
+    AZIMUTH: "0 deg"
+    ROLL: "270 deg"
+
+# --- Image Resolution ---
+# This pixel dimensions for all instruments (JWST, ALMA, etc)
+resolution_settings:
+    NUMPIXELSX: "800"
+    NUMPIXELSY: "800"
+
+# --- Dust Settings ---
+# need a mapping
+# dust_setting = draine etc 
+# make nested so that the num params are nested and i just call what model to use
+
+dust_settings:
+# these need to be nested.
+# so that i can call specifically what dust mix to use
+# go thru codex with my stuff
+# move everything to vs code again
+# get ready to run batch jobs
+# do a test run on my machine to test the roll and cropping issure are solved. 
+# have codex wirte a website with me for myst (downlaod myst) to explain steps of everything including the info for running batch jobs
+    # Draine & Li 2007
+    DUST_MIX_CONFIG: '<DraineLiDustMix numSilicateSizes="5" numGraphiteSizes="5" numPAHSizes="5"/>'
+    # THEMIS
+    # DUST_MIX_CONFIG: '<ThemisDustMix numSilicateSizes="5" numHydrocarbonSizes="5"/>'
+    # Custom / AstroPAH Config
+    # DUST_MIX_CONFIG: |
+    #     <ConfigurableDustMix>
+    #         <populations type="DustPopulation">
+    #             <GrainSizeDistributionDustPopulation ... />
+    #             <AstroPahDustPopulation ... />
+    #         </populations>
+    #     </ConfigurableDustMix>

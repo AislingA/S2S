@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A SKIRT parameter file © Astronomical Observatory, Ghent University -->
+<skirt-simulation-hierarchy type="MonteCarloSimulation" format="9">
+<!-- -------------- -->
+<!-- SIMULATIONMODE -->
+<!-- -------------- -->
+    <MonteCarloSimulation userLevel="USERLEVEL" simulationMode="SIMULATIONMODE" iteratePrimaryEmission="ITERATE_PRIMARY" iterateSecondaryEmission="ITERATE_SECONDARY" numPackets="NUMPACKETS">
+        <random type="Random">
+            <Random seed="0"/>
+        </random>
+        <units type="Units">
+            <StellarUnits wavelengthOutputStyle="Wavelength" fluxOutputStyle="Frequency"/>
+        </units>
+<!-- ------ -->
+<!-- SOURCE -->
+<!-- ------ -->
+        <sourceSystem type="SourceSystem">
+            <SourceSystem minWavelength="0.09 micron" maxWavelength="500 micron" sourceBias="0.5">
+                <sources type="Source">
+                    <ParticleSource filename="SOURCEFILE" importVelocity="false" importVelocityDispersion="false" importCurrentMass="false" useColumns="" sourceWeight="1" wavelengthBias="0.5">
+                        <smoothingKernel type="SmoothingKernel">
+                            <UniformSmoothingKernel/>
+                        </smoothingKernel>
+                        <sedFamily type="SEDFamily">
+                            <BlackBodySEDFamily/>
+                        </sedFamily>
+                        <wavelengthBiasDistribution type="WavelengthDistribution">
+                            <DefaultWavelengthDistribution/>
+                        </wavelengthBiasDistribution>
+                    </ParticleSource>
+                </sources>
+            </SourceSystem>
+        </sourceSystem>
+<!-- ------ -->
+<!-- MEDIUM -->
+<!-- ------ -->
+        <mediumSystem type="MediumSystem">
+            <MediumSystem>
+                <photonPacketOptions type="PhotonPacketOptions">
+                    <PhotonPacketOptions forceScattering="true" minWeightReduction="1e4" minScattEvents="0" pathLengthBias="0.5"/>
+                </photonPacketOptions>
+<!-- -------------- -->
+<!-- RADIATIONFIELD -->
+<!-- -------------- -->
+                <radiationFieldOptions type="RadiationFieldOptions">
+                    <RadiationFieldOptions storeRadiationField="true">
+                        <radiationFieldWLG type="DisjointWavelengthGrid">
+                            <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
+                        </radiationFieldWLG>
+                    </RadiationFieldOptions>
+                </radiationFieldOptions>
+<!-- ------------------- -->
+<!-- DUSTEMISSIONOPTIONS -->
+<!-- ------------------- -->
+                <dustEmissionOptions type="DustEmissionOptions">
+                    <DustEmissionOptions dustEmissionType="Stochastic" includeHeatingByCMB="true" maxFractionOfPrimary="0.01" maxFractionOfPrevious="0.03" sourceWeight="1" wavelengthBias="0.5">
+                        <cellLibrary type="SpatialCellLibrary">
+                            <AllCellsLibrary/>
+                        </cellLibrary>
+                        <dustEmissionWLG type="DisjointWavelengthGrid">
+                            <LogWavelengthGrid minWavelength="1 micron" maxWavelength="500 micron" numWavelengths="150"/>
+                        </dustEmissionWLG>
+                        <wavelengthBiasDistribution type="WavelengthDistribution">
+                            <DefaultWavelengthDistribution/>
+                        </wavelengthBiasDistribution>
+                    </DustEmissionOptions>
+                </dustEmissionOptions>
+                <iterationOptions type="IterationOptions">
+                    <IterationOptions maxSecondaryIterations="25" secondaryIterationPacketsMultiplier="4"/>
+                </iterationOptions>
+<!-- -------------- -->
+<!-- PARTICLEMEDIUM -->
+<!-- -------------- -->
+<!-- AA 7/14 removed maxTemp=0 k -->
+<!-- AA 10/24 Adding back in maxTemp=1500 K -->
+                <media type="Medium">
+                    <ParticleMedium filename="GASFILE" massType="Mass" massFraction="0.01" importMetallicity="false" importTemperature="true" maxTemperature="1500 K" importVelocity="false" importMagneticField="false" importVariableMixParams="false" useColumns="">
+                        <smoothingKernel type="SmoothingKernel">
+                            <UniformSmoothingKernel/>
+                        </smoothingKernel>
+                        <materialMix type="MaterialMix">
+                            DUST+MIX_CONFIG
+                        </materialMix>
+                    </ParticleMedium>
+                </media>
+                <samplingOptions type="SamplingOptions">
+                    <SamplingOptions numDensitySamples="100" numPropertySamples="1" aggregateVelocity="Average"/>
+                </samplingOptions>
+                <grid type="SpatialGrid">
+                    <PolicyTreeSpatialGrid minX="XMIN" maxX="XMAX" minY="YMIN" maxY="YMAX" minZ="ZMIN" maxZ="ZMAX" treeType="OctTree">
+                        <policy type="TreePolicy">
+                            <DensityTreePolicy minLevel="MINLEVEL" maxLevel="MAXLEVEL" maxDustFraction="1e-6" maxDustOpticalDepth="0" maxDustDensityDispersion="0" maxElectronFraction="1e-6" maxGasFraction="1e-6"/>
+                        </policy>
+                    </PolicyTreeSpatialGrid>
+                </grid>
+            </MediumSystem>
+        </mediumSystem>
+<!-- ---------- -->
+<!-- INSTRUMENT -->
+<!-- ---------- -->
+        <instrumentSystem type="InstrumentSystem">
+            <InstrumentSystem>
+                <instruments type="Instrument">
+<!-- -------- -->
+<!-- LOGWAVES -->
+<!-- -------- -->                
+                    <FullInstrument instrumentName="logwaves" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="AZIMUTH" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
+                        </wavelengthGrid>
+                    </FullInstrument>
+<!-- ---------- -->
+<!-- OPTICAL/UV -->
+<!-- ---------- --> 
+                    <FullInstrument instrumentName="optical_uv" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <ConfigurableBandWavelengthGrid>
+                                <bands type="Band">
+                                    <BroadBand bandName="GALEX_GALEX_FUV"/>
+                                    <BroadBand bandName="GALEX_GALEX_NUV"/>
+                                    <BroadBand bandName="JOHNSON_U"/>
+                                    <BroadBand bandName="JOHNSON_B"/>
+                                    <BroadBand bandName="JOHNSON_V"/>
+                                    <BroadBand bandName="JOHNSON_R"/>
+                                    <BroadBand bandName="JOHNSON_I"/>
+                                </bands>
+                            </ConfigurableBandWavelengthGrid>
+                        </wavelengthGrid>
+                    </FullInstrument>
+<!-- ---- -->
+<!-- JWST -->
+<!-- ---- --> 
+                    <FullInstrument instrumentName="jwst" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <ConfigurableBandWavelengthGrid>
+                                <bands type="Band">
+                                    <BroadBand bandName="JWST_NIRCAM_F090W"/>
+                                    <BroadBand bandName="JWST_NIRCAM_F150W"/>
+                                    <BroadBand bandName="JWST_NIRCAM_F200W"/>
+                                    <BroadBand bandName="JWST_NIRCAM_F277W"/>
+                                    <BroadBand bandName="JWST_NIRCAM_F322W2"/>
+                                    <BroadBand bandName="JWST_NIRCAM_F356W"/>
+                                    <BroadBand bandName="JWST_NIRCAM_F444W"/>
+                                    <BroadBand bandName="JWST_MIRI_F770W"/>
+                                    <BroadBand bandName="JWST_MIRI_F1500W"/>
+                                </bands>
+                            </ConfigurableBandWavelengthGrid>
+                        </wavelengthGrid>
+                    </FullInstrument>
+<!-- ------- -->
+<!-- SPITZER -->
+<!-- ------- --> 
+                    <FullInstrument instrumentName="spitzer" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <ConfigurableBandWavelengthGrid>
+                                <bands type="Band">
+                                    <BroadBand bandName="SPITZER_IRAC_I1"/>
+                                    <BroadBand bandName="SPITZER_IRAC_I4"/>
+                                    <BroadBand bandName="SPITZER_MIPS_24"/>
+                                    <BroadBand bandName="SPITZER_MIPS_70"/>
+                                    <BroadBand bandName="SPITZER_MIPS_160"/>
+                                </bands>
+                            </ConfigurableBandWavelengthGrid>
+                        </wavelengthGrid>
+                    </FullInstrument>
+<!-- -------- -->
+<!-- HERSCHEL -->
+<!-- -------- --> 
+                    <FullInstrument instrumentName="herschel" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <ConfigurableBandWavelengthGrid>
+                                <bands type="Band">
+                                    <BroadBand bandName="HERSCHEL_PACS_70"/>
+                                    <BroadBand bandName="HERSCHEL_PACS_100"/>
+                                    <BroadBand bandName="HERSCHEL_PACS_160"/>
+                                    <BroadBand bandName="HERSCHEL_SPIRE_250"/>
+                                    <BroadBand bandName="HERSCHEL_SPIRE_350"/>
+                                    <BroadBand bandName="HERSCHEL_SPIRE_500"/>
+                                </bands>
+                            </ConfigurableBandWavelengthGrid>
+                        </wavelengthGrid>
+                    </FullInstrument>
+<!-- ----- -->
+<!-- RUBIN -->
+<!-- ----- --> 
+                    <FullInstrument instrumentName="rubin" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <ConfigurableBandWavelengthGrid>
+                                <bands type="Band">
+                                    <BroadBand bandName="RUBIN_LSST_U"/>
+                                    <BroadBand bandName="RUBIN_LSST_G"/>
+                                    <BroadBand bandName="RUBIN_LSST_R"/>
+                                    <BroadBand bandName="RUBIN_LSST_I"/>
+                                    <BroadBand bandName="RUBIN_LSST_Z"/>
+                                    <BroadBand bandName="RUBIN_LSST_Y"/>
+                                </bands>
+                            </ConfigurableBandWavelengthGrid>
+                        </wavelengthGrid>
+                    </FullInstrument>
+                </instruments>
+            </InstrumentSystem>
+        </instrumentSystem>
+<!-- ------ -->
+<!-- PROBES -->
+<!-- ------ -->
+        <probeSystem type="ProbeSystem">
+            <ProbeSystem>
+                <probes type="Probe">
+                    <ImportedMediumDensityProbe probeName="mediumdensityprobe">
+                        <form type="GenericForm">
+                          <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </ImportedMediumDensityProbe>
+                    <ImportedMediumTemperatureProbe probeName="mediumtemperatureprobe">
+                        <form type="GenericForm">
+                          <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </ImportedMediumTemperatureProbe>
+                    <ImportedSourceLuminosityProbe probeName="sourceluminosityprobe" convolve="false">
+                        <form type="GenericForm">
+                            <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
+                        </wavelengthGrid>
+                    </ImportedSourceLuminosityProbe>
+                    <LuminosityProbe probeName="luminosityprobe">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
+                        </wavelengthGrid>
+                    </LuminosityProbe>
+                    <ConvergenceCutsProbe probeName="convergencecutsprobe" probeAfter="Run"/>
+                    <SpatialGridPlotProbe probeName="spatialgridplotprobe"/>
+                    <DensityProbe probeName="densityprobe" aggregation="Type" probeAfter="Run">
+                        <form type="Form">
+                          <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </DensityProbe>
+                    <OpacityProbe probeName="opacityprobe" aggregation="Type" probeAfter="Run">
+                        <form type="Form">
+                            <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </OpacityProbe>
+                    <OpticalMaterialPropertiesProbe probeName="opticalmaterialpropertiesprobe">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
+                        </wavelengthGrid>
+                    </OpticalMaterialPropertiesProbe>
+                    <DustGrainSizeDistributionProbe probeName="dustgrainsizedistributionprobe" numSamples="250"/>
+                    <DustEmissivityProbe probeName="dustemissivityprobe" writeWavelengthGrid="True"/>
+                    <InstrumentWavelengthGridProbe probeName="instrumentwavelengthgridprobe"/>
+                    <RadiationFieldProbe probeName="radiationfieldprobe" writeWavelengthGrid="True" probeAfter="Run">
+                        <form type="Form">
+                          <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </RadiationFieldProbe>
+                    <TemperatureProbe probeName="temperatureprobe" aggregation="Type" probeAfter="Run">
+                        <form type="Form">
+                          <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </TemperatureProbe>
+                </probes>
+            </ProbeSystem>
+        </probeSystem>
+    </MonteCarloSimulation>
+</skirt-simulation-hierarchy>
