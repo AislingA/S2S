@@ -3,34 +3,25 @@
 # imports
 import numpy as np
 import os
+import constants as c
 
-def get_intrinsic_luminosity(pt5_data):
+def get_intrinsic_luminosity(pt5_data, f_acc=0.75):
     """
     Calculates the intrinsic stellar luminosity by subtracting the 
     accretion luminosity from the total bolometric luminosity.
 
     source where eq and f acc came from 
-    check using si or cgs
-
-    can define f_acc as an input param, set to a default val
     """
-    G = 6.67430e-11        
-    M_sun = 1.98847e30     
-    R_sun = 6.957e8        
-    L_sun = 3.828e26       
-    pc_to_m = 3.085677e16
-    f_acc = 0.75
-    
-    M_star_kg = pt5_data['BH_Mass'] * M_sun
-    M_dot_kg_s = pt5_data['BH_Mdot'] * M_sun / pc_to_m
-    R_star_m = pt5_data['ProtoStellarRadius_inSolar'] * R_sun
+    M_star_kg = pt5_data['BH_Mass'] * c.M_sun
+    M_dot_kg_s = pt5_data['BH_Mdot'] * c.M_sun / c.pc_to_m
+    R_star_m = pt5_data['ProtoStellarRadius_inSolar'] * c.R_sun
     L_tot = pt5_data['StarLuminosity_Solar']
     
     L_acc_Lsun = np.zeros_like(L_tot)
     valid = pt5_data['ProtoStellarRadius_inSolar'] > 0
     
-    L_acc_W = f_acc * G * M_star_kg[valid] * M_dot_kg_s[valid] / R_star_m[valid]
-    L_acc_Lsun[valid] = L_acc_W / L_sun
+    L_acc_W = f_acc * c.G * M_star_kg[valid] * M_dot_kg_s[valid] / R_star_m[valid]
+    L_acc_Lsun[valid] = L_acc_W / c.L_sun
     
     return np.clip(L_tot - L_acc_Lsun, 0, None)
 
@@ -51,8 +42,7 @@ def compute_stellar_temperature(luminosity, star_radius):
     np.ndarray
         Effective temperature in Kelvin (K).
     """
-    T_sun = 5777 # K
-    return T_sun * (luminosity / star_radius**2)**0.25
+    return c.T_sun * (luminosity / star_radius**2)**0.25
 
 def print_stats(name, data_dict, verbose=False):
     """

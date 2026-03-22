@@ -1,18 +1,23 @@
 # src/config/replacements
-# do this like the documentation and build up the nesting 
-# change quotes to in the ski file
-# so here will just be values with no ""
 # same for units, have the units in the ski file, inclination area
-# can eventually have sep files for each category
-# 
+
 # --- Simulation Mode ---
 # The following controls the photon count and the type of physics iteration
 simulation_settings:
-    USERLEVEL: "Expert"
-    SIMULATIONMODE: "DustEmission"
-    ITERATE_PRIMARY: "false"
-    ITERATE_SECONDARY: "true"
-    NUMPACKETS: "1e7"
+    USERLEVEL: Expert
+    SIMULATIONMODE: DustEmission
+    ITERATE_PRIMARY: false
+    ITERATE_SECONDARY: true
+    NUMPACKETS: 1e7
+
+random_settings:
+    SEED: 0
+
+unit_settings:
+    
+
+source_settings:
+
 
 # --- Spatial Grid ---
 # Controls the reolution of the Octree

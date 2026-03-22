@@ -1,11 +1,8 @@
-# src/runner/run_sim
+# src/runner/run_sim.py
 
-# how to run from the src/ directory
-# python -m runner.run_sim
-
-# imports
 import time
 import os
+import argparse  # Added missing import
 import PTS9.simulation as sm
 
 from file_io.loader import load_snapshot, get_header_data, get_particle_data, filter_by_id
@@ -13,25 +10,14 @@ from geometry.transform import finalize_dataset
 from processing.formatter import format_source_file, format_gas_file
 from config.writer import get_default_replacements, apply_yaml_replacements
 
-def run_pipeline(snapshot_path, percentage=1.0, verbose=True):
+def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
     """
     Executes the full end-to-end pipeline from raw snapshot to SKIRT output.
-
-    Parameters
-    ----------
-    snapshot_path : str
-        Path to the raw STARFORGE .hdf5 snapshot.
-    percentage : float, optional
-        The fraction of the box half-width to extract (0.0 to 1.0). Default is 1.0.
-    verbose : bool, optional
-        If True, prints detailed statistics and progress updates.
-
-    Returns
-    -------
-    sim_result : PTS9.simulation.Result or None
-        The result object from the SKIRT execution, or None if the run failed.
     """
     start_time = time.time()
+
+    # Create the output directory if it doesn't exist
+    os.makedirs(out_dir, exist_ok=True)
 
     if not os.path.exists(snapshot_path):
         print(f"Error: Snapshot {snapshot_path} not found.")
@@ -53,6 +39,8 @@ def run_pipeline(snapshot_path, percentage=1.0, verbose=True):
 
         print("Formatting text inputs for SKIRT...")
         base_name = os.path.basename(snapshot_path).replace('.hdf5', '')
+        
+        # out_dir is now properly scoped
         src_path = os.path.join(out_dir, f"{base_name}_src.txt")
         gas_path = os.path.join(out_dir, f"{base_name}_gas.txt")
         ski_output = os.path.join(out_dir, f"{base_name}.ski")
@@ -63,7 +51,6 @@ def run_pipeline(snapshot_path, percentage=1.0, verbose=True):
         gas_file, *bounds = gas_info
 
         print("Generating SKIRT configuration file...")
-        
         base_dir = os.path.dirname(os.path.abspath(__file__)) 
         src_dir = os.path.dirname(base_dir) 
         
@@ -87,9 +74,12 @@ def run_pipeline(snapshot_path, percentage=1.0, verbose=True):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run SKIRT pipeline on a snapshot.")
-    parser.add_argument("snapshot_file", help="Path to the raw STARFORGE .hdf5 snapshot.")
-    parser.add_argument("--out_dir", default="../../outputs", help="Directory to save all output files.")
+    
+    # Updated to match the YAML flags exactly
+    parser.add_argument("--input", required=True, help="Path to the raw STARFORGE .hdf5 snapshot.")
+    parser.add_argument("--output-dir", required=True, help="Directory to save all output files.")
     
     args = parser.parse_args()
 
-    run_pipeline(args.snapshot_file, args.out_dir, percentage=1.0)
+    # Pass the arguments in the correct order based on the new function signature
+    run_pipeline(snapshot_path=args.input, out_dir=args.output_dir, percentage=1.0)
