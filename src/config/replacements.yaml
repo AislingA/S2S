@@ -46,8 +46,6 @@ resolution_settings:
 dust_settings:
 # these need to be nested.
 # so that i can call specifically what dust mix to use
-# go thru codex with my stuff
-# move everything to vs code again
 # get ready to run batch jobs
 # do a test run on my machine to test the roll and cropping issure are solved. 
 # have codex wirte a website with me for myst (downlaod myst) to explain steps of everything including the info for running batch jobs

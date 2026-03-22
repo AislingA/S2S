@@ -79,7 +79,7 @@
                             <UniformSmoothingKernel/>
                         </smoothingKernel>
                         <materialMix type="MaterialMix">
-                            DUST+MIX_CONFIG
+                            DUST_MIX_CONFIG
                         </materialMix>
                     </ParticleMedium>
                 </media>
