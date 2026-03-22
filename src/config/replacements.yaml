@@ -4,19 +4,14 @@
 # --- Simulation Mode ---
 # The following controls the photon count and the type of physics iteration
 simulation_settings:
-    USERLEVEL: Expert
-    SIMULATIONMODE: DustEmission
-    ITERATE_PRIMARY: false
-    ITERATE_SECONDARY: true
-    NUMPACKETS: 1e7
+    USERLEVEL: "Expert"
+    SIMULATIONMODE: "DustEmission"
+    ITERATE_PRIMARY: "false"
+    ITERATE_SECONDARY: "true"
+    NUMPACKETS: "1e7"
 
 random_settings:
-    SEED: 0
-
-unit_settings:
-    
-
-source_settings:
+    SEED: "0"
 
 
 # --- Spatial Grid ---
