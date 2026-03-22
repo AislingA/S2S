@@ -101,26 +101,17 @@
         <instrumentSystem type="InstrumentSystem">
             <InstrumentSystem>
                 <instruments type="Instrument">
+<!-- -------- -->
+<!-- LOGWAVES -->
+<!-- -------- -->                
                     <FullInstrument instrumentName="logwaves" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="optical_uv" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
-                        <wavelengthGrid type="WavelengthGrid">
-                            <ConfigurableBandWavelengthGrid>
-                                <bands type="Band">
-                                    <BroadBand bandName="GALEX_FUV"/>
-                                    <BroadBand bandName="GALEX_NUV"/>
-                                    <BroadBand bandName="JOHNSON_U"/>
-                                    <BroadBand bandName="JOHNSON_B"/>
-                                    <BroadBand bandName="JOHNSON_V"/>
-                                    <BroadBand bandName="JOHNSON_R"/>
-                                    <BroadBand bandName="JOHNSON_I"/>
-                                </bands>
-                            </ConfigurableBandWavelengthGrid>
-                        </wavelengthGrid>
-                    </FullInstrument>
+<!-- ---- -->
+<!-- JWST -->
+<!-- ---- --> 
                     <FullInstrument instrumentName="jwst" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
@@ -138,6 +129,9 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
+<!-- ------- -->
+<!-- SPITZER -->
+<!-- ------- --> 
                     <FullInstrument instrumentName="spitzer" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
@@ -151,6 +145,9 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
+<!-- -------- -->
+<!-- HERSCHEL -->
+<!-- -------- --> 
                     <FullInstrument instrumentName="herschel" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
@@ -165,16 +162,19 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
+<!-- ----- -->
+<!-- RUBIN -->
+<!-- ----- --> 
                     <FullInstrument instrumentName="rubin" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
-                                    <BroadBand bandName="LSST_U"/>
-                                    <BroadBand bandName="LSST_G"/>
-                                    <BroadBand bandName="LSST_R"/>
-                                    <BroadBand bandName="LSST_I"/>
-                                    <BroadBand bandName="LSST_Z"/>
-                                    <BroadBand bandName="LSST_Y"/>
+                                    <BroadBand bandName="RUBIN_LSST_U"/>
+                                    <BroadBand bandName="RUBIN_LSST_G"/>
+                                    <BroadBand bandName="RUBIN_LSST_R"/>
+                                    <BroadBand bandName="RUBIN_LSST_I"/>
+                                    <BroadBand bandName="RUBIN_LSST_Z"/>
+                                    <BroadBand bandName="RUBIN_LSST_Y"/>
                                 </bands>
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
