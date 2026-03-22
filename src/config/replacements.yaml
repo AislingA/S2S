@@ -10,9 +10,6 @@ simulation_settings:
     ITERATE_SECONDARY: "true"
     NUMPACKETS: "1e7"
 
-random_settings:
-    SEED: "0"
-
 
 # --- Spatial Grid ---
 # Controls the reolution of the Octree
