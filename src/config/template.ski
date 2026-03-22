@@ -238,8 +238,11 @@
                     </DensityProbe>
                     <OpacityProbe probeName="opacityprobe" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                            <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                          <ParallelProjectionForm inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="{MIN_WAVELENGTH} micron" maxWavelength="{MAX_WAVELENGTH} micron" numWavelengths="{WAVELENGTH_BINS}"/>
+                        </wavelengthGrid>
                     </OpacityProbe>
                     <OpticalMaterialPropertiesProbe probeName="opticalmaterialpropertiesprobe">
                         <wavelengthGrid type="WavelengthGrid">
