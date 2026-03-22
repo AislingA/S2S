@@ -4,9 +4,9 @@
 <!-- -------------- -->
 <!-- SIMULATIONMODE -->
 <!-- -------------- -->
-    <MonteCarloSimulation userLevel="{USERLEVEL}" simulationMode="{SIMULATIONMODE}" iteratePrimaryEmission="{ITERATE_PRIMARY}" iterateSecondaryEmission="{ITERATE_SECONDARY}" numPackets="{NUMPACKETS}">
+    <MonteCarloSimulation userLevel="USERLEVEL" simulationMode="SIMULATIONMODE" iteratePrimaryEmission="ITERATE_PRIMARY" iterateSecondaryEmission="ITERATE_SECONDARY" numPackets="NUMPACKETS">
         <random type="Random">
-            <Random seed="{SEED}"/>
+            <Random seed="SEED"/>
         </random>
         <units type="Units">
             <StellarUnits wavelengthOutputStyle="Wavelength" fluxOutputStyle="Frequency"/>
