@@ -1,56 +1,61 @@
-# src/config/replacements
-# same for units, have the units in the ski file, inclination area
+# src/config/replacements.yaml
 
-# --- Simulation Mode ---
-# The following controls the photon count and the type of physics iteration
+# SKIRT9 Simulation Parameters
+
+global_wavelength_settings:
+    MIN_WAVELENGTH: "0.09 micron"
+    MAX_WAVELENGTH: "500 micron"
+    NUM_WAVELENGTHS: "150"
+
+global_instrument_angles:
+    # 0 deg inclination = face-on, 90 deg = edge-on
+    DISTANCE: "1 kpc"
+    INCLINATION: "0 deg"
+    AZIMUTH: "0 deg"
+    ROLL: "270 deg"
+    NUMPIXELSX: "800"
+    NUMPIXELSY: "800"
+
 simulation_settings:
     USERLEVEL: "Expert"
     SIMULATIONMODE: "DustEmission"
     ITERATE_PRIMARY: "false"
     ITERATE_SECONDARY: "true"
     NUMPACKETS: "1e7"
+    RANDOM_SEED: "0"
 
-
-# --- Spatial Grid ---
-# Controls the reolution of the Octree
-# A higher max_level = finer resolution but more memory/time
 grid_settings:
     MINLEVEL: "6"
     MAXLEVEL: "12"
 
-# --- Instrument / Camera Positions ---
-# Controls where the "camera" is placed relative to the center of the simulation
-# For inclination: 0 deg = face-on, 90 deg = edge-on
-# for roll: rolls the camera to match cartesian x/y.
-# if this flips the sim the wrong way, set to 90 degrees
-instrument_settings:
-    DISTANCE: "1 kpc"
-    INCLINATION: "0 deg"
-    AZIMUTH: "0 deg"
-    ROLL: "270 deg"
+medium_settings:
+    FORCE_SCATTERING: "true"
 
-# --- Image Resolution ---
-# This pixel dimensions for all instruments (JWST, ALMA, etc)
-resolution_settings:
-    NUMPIXELSX: "800"
-    NUMPIXELSY: "800"
+radiation_field_settings:
+    STORE_RAD_FIELD: "true"
 
-# --- Dust Settings ---
-# need a mapping
-# dust_setting = draine etc 
-# make nested so that the num params are nested and i just call what model to use
+dust_emission_settings:
+    # "Stochastic" for transiently heated small grains (PAHs), "Equilibrium" for fast, thermal only
+    DUST_EMISSION_TYPE: "Stochastic"
+    MAX_ITERATIONS: "25"
+    ITERATION_MULTIPLIER: "4"
+
+particle_medium_settings:
+    # Typically 0.01 for Milky Way ISM
+    DUST_TO_GAS_RATIO: "0.01"
+    # Crucial to prevent SKIRT crashing near hot Sink particles
+    MAX_DUST_TEMP: "1500 K"
 
 dust_settings:
-# these need to be nested.
-# so that i can call specifically what dust mix to use
-# get ready to run batch jobs
-# do a test run on my machine to test the roll and cropping issure are solved. 
-# have codex wirte a website with me for myst (downlaod myst) to explain steps of everything including the info for running batch jobs
-    # Draine & Li 2007
+    # NOTE: Uncomment exactly ONE of the DUST_MIX_CONFIG blocks below
+
+    # Option 1: Draine & Li 2007 (Standard MW)
     DUST_MIX_CONFIG: '<DraineLiDustMix numSilicateSizes="5" numGraphiteSizes="5" numPAHSizes="5"/>'
-    # THEMIS
+    
+    # Option 2: THEMIS (Jones et al. 2017)
     # DUST_MIX_CONFIG: '<ThemisDustMix numSilicateSizes="5" numHydrocarbonSizes="5"/>'
-    # Custom / AstroPAH Config
+    
+    # Option 3: Custom AstroPAH
     # DUST_MIX_CONFIG: |
     #     <ConfigurableDustMix>
     #         <populations type="DustPopulation">
