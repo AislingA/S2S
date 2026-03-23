@@ -2,7 +2,7 @@
 
 import time
 import os
-import argparse  # Added missing import
+import argparse
 import PTS9.simulation as sm
 
 from file_io.loader import load_snapshot, get_header_data, get_particle_data, filter_by_id

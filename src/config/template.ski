@@ -109,6 +109,24 @@
                             <LogWavelengthGrid minWavelength="0.09 micron" maxWavelength="500 micron" numWavelengths="150"/>
                         </wavelengthGrid>
                     </FullInstrument>
+<!-- ---------- -->
+<!-- OPTICAL/UV -->
+<!-- ---------- --> 
+                    <FullInstrument instrumentName="optical_uv" distance="DISTANCE" inclination="INCLINATION" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">
+                            <ConfigurableBandWavelengthGrid>
+                                <bands type="Band">
+                                    <BroadBand bandName="GALEX_GALEX_FUV"/>
+                                    <BroadBand bandName="GALEX_GALEX_NUV"/>
+                                    <BroadBand bandName="JOHNSON_U"/>
+                                    <BroadBand bandName="JOHNSON_B"/>
+                                    <BroadBand bandName="JOHNSON_V"/>
+                                    <BroadBand bandName="JOHNSON_R"/>
+                                    <BroadBand bandName="JOHNSON_I"/>
+                                </bands>
+                            </ConfigurableBandWavelengthGrid>
+                        </wavelengthGrid>
+                    </FullInstrument>
 <!-- ---- -->
 <!-- JWST -->
 <!-- ---- --> 
