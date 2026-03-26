@@ -4,6 +4,7 @@ metadata:
   name: skirt-batch-job
   namespace: sdsu-rosen-astro-group 
 spec:
+  backoffLimit: 0
   template:
     spec:
       containers:
@@ -12,20 +13,23 @@ spec:
         command: ["/bin/bash", "-c"]
         args: 
           - |
-            echo "Starting batch job..."
+            echo "Initializing Batch Pipeline..."
+
+            git clone https://github.com/AislingA/S2S.git /workspace/S2S
+            cd /workspace/S2S
             
-            cd /home/jovyan/BSAS/src
-            
-            SNAPSHOTS=(
-              "../data/snapshot_150.hdf5"
-              "../data/snapshot_200.hdf5"
-              "../data/snapshot_250.hdf5"
-              "../data/snapshot_296.hdf5"
-            )
+            SNAPSHOTS=(150 200 250 296)
             
             for snap in "${SNAPSHOTS[@]}"; do
-              echo "Processing $snap..."
-              python -m runner.run_sim "$snap" --out_dir ../outputs/
+              echo "Processing snapshot_${snap}.hdf5"
+              OUT_DIR="/data/outputs/snapshot_${SNAP}"
+              mkdir -p "${OUT_DIR}"
+
+              python src/runner/run_sim.py \
+                --input "s3:sdsu-rosen/snapshot_${SNAP}.hdf5" \
+                --output-dir "${OUT_DIR}"
+
+              echo "Completed snapshot_${SNAP}"
             done
             
             echo "All 4 simulations complete!"
@@ -38,11 +42,11 @@ spec:
             memory: "128Gi"
             cpu: "16"
         volumeMounts:
-        - name: storage-volume
-          mountPath: /home/jovyan 
+        - name: s2s-storage
+          mountPath: /data
       restartPolicy: Never
       volumes:
-      - name: storage-volume
+      - name: s2s-storage
         persistentVolumeClaim:
-          claimName: shared
+          claimName: s2s
   backoffLimit: 0
