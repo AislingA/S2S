@@ -51,16 +51,14 @@ def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
         return None
     
     try:
-        # Data Ingestion (loader.py)
-        # Using a context manager ('with') ensures the HDF5 file safely closes 
-        # after data extraction, preventing memory leaks or file corruption.
+        # Data Loading (loader.py)
         print(f"Loading snapshot: {snapshot_path}")
         with load_snapshot(snapshot_path) as f:
             header = get_header_data(f)
             raw_gas = get_particle_data(f, part_type=0)
             raw_sinks = get_particle_data(f, part_type=5)
 
-        # Data Sanitization (loader.py)
+        # Data Cleaning (loader.py)
         print("Filtering boundary particles...")
         gas_clean = filter_by_id(raw_gas)
         sinks_clean = filter_by_id(raw_sinks)
@@ -116,7 +114,7 @@ def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
 if __name__ == "__main__":
     # Command-line interface for HPC batch scheduling
     parser = argparse.ArgumentParser(description="Run the S2S pipeline on a STARFORGE snapshot.")
-    
+    # !!! Add in the sections here to do the four percentages
     parser.add_argument("--input", required=True, help="Path to the raw STARFORGE .hdf5 snapshot.")
     parser.add_argument("--output-dir", required=True, help="Directory to save all output files.")
     

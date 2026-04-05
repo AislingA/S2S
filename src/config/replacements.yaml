@@ -8,11 +8,10 @@ global_wavelength_settings:
     NUM_WAVELENGTHS: "150"
 
 global_instrument_angles:
-    # 0 deg inclination = face-on, 90 deg = edge-on
     DISTANCE: "1 kpc"
     INCLINATION: "0 deg"
     AZIMUTH: "0 deg"
-    ROLL: "270 deg"
+    ROLL: "90 deg"
     NUMPIXELSX: "800"
     NUMPIXELSY: "800"
 

@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: skirt-pod
+  namespace: sdsu-rosen-astro-group
+spec:
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 100
+
+  initContainers:
+  - name: volume-mount-hack
+    image: busybox
+    securityContext:
+      runAsUser: 0
+    command: ["sh", "-c", "chown 1000:100 /data"]
+    resources:
+      limits:
+        memory: "1Gi"
+        cpu: "1"
+      requests:
+        memory: "1Gi"
+        cpu: "1"
+    volumeMounts:
+    - name: s2s-storage
+      mountPath: /data
+
+  # --- MAIN PIPELINE RUNNER ---
+  containers:
+  - name: skirt-runner
+    image: ghcr.io/sdsu-research-ci/astro-notebook@sha256:b790987333dac51a8ea777988bc4bf2b5a09f823819b1419beff51f69075b462
+    
+    # Prepend start.sh so the Jupyter environment configures sudo before sleeping
+    command: ["start.sh", "/bin/bash", "-c", "sleep infinity"]
+    
+    securityContext:
+      runAsUser: 0 # Run initially as root for start.sh to work
+      
+    env:
+    - name: GRANT_SUDO
+      value: "yes"
+      
+    resources:
+      limits:
+        memory: "32Gi"
+        cpu: "4"
+      requests:
+        memory: "32Gi"
+        cpu: "4"
+
+    volumeMounts:
+    - name: s2s-storage
+      mountPath: /data
+    - name: rclone-config-volume
+      mountPath: /home/jovyan/.config/rclone
+    - name: skirt-resources
+      mountPath: /opt/SKIRT/resources
+
+  restartPolicy: Never
+
+  volumes:
+  - name: s2s-storage
+    persistentVolumeClaim:
+      claimName: s2s
+  - name: rclone-config-volume
+    secret:
+      secretName: rclone-config
+  - name: skirt-resources
+    persistentVolumeClaim:
+      claimName: skirt-resources
