@@ -40,9 +40,9 @@ def get_intrinsic_luminosity(pt5_data, f_acc=0.75):
         Array of intrinsic stellar luminosities in units of Solar Luminosity (Lsun).
         Values are clipped to a minimum of 0 to precent unphysical negative luminosities.
     """
-    M_star_kg = pt5_data['BH_Mass'] * c.M_sun
+    M_star_kg = pt5_data['BH_Mass'].astype(np.float64) * c.M_sun
     # Mass accretion rate must be Mass/Time
-    M_dot_kg_s = pt5_data['BH_Mdot'] * c.M_sun / c.yr_to_s
+    M_dot_kg_s = pt5_data['BH_Mdot'].astype(np.float64) * c.M_sun / c.yr_to_s
     R_star_m = pt5_data['ProtoStellarRadius_inSolar'] * c.R_sun
     L_tot = pt5_data['StarLuminosity_Solar']
     

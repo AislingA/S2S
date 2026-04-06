@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rescue-upload-job
+  namespace: sdsu-rosen-astro-group
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: uploader
+        image: ghcr.io/sdsu-research-ci/astro-notebook@sha256:b790987333dac51a8ea777988bc4bf2b5a09f823819b1419beff51f69075b462
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "=== RESCUING DATA TO S3 ==="
+            export HOME=/home/jovyan
+            
+            echo "1. Looking inside the permanent s2s storage drive..."
+            ls -lah /data/outputs/
+            
+            echo "2. Uploading all outputs to S3..."
+            # This pushes everything inside /data/outputs/ directly to your cloud bucket
+            rclone copy /data/outputs/ s3:sdsu-rosen/skirt_outputs/ -v
+            
+            echo "Rescue complete! You can now safely view your files in S3."
+            
+        resources:
+          limits:
+            memory: "4Gi"
+            cpu: "1"
+          requests:
+            memory: "4Gi"
+            cpu: "1"
+            
+        volumeMounts:
+        - name: s2s-storage
+          mountPath: /data
+        - name: rclone-config-volume
+          mountPath: /home/jovyan/.config/rclone
+          
+      restartPolicy: Never
+      
+      volumes:
+      - name: s2s-storage
+        persistentVolumeClaim:
+          claimName: s2s
+      - name: rclone-config-volume
+        secret:
+          secretName: rclone-config

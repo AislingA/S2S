@@ -15,34 +15,15 @@ spec:
           - |
             echo "Initializing Batch Pipeline..."
 
-            echo "=== STEP 1: DOWNLOADING SKIRT RESOURCES ==="
-            export HOME=/home/jovyan
-            
-            # SKIRT WILL CRASH WITHOUT THESE! Downloading your resources from S3:
-            mkdir -p /home/jovyan/resources_Raw
-            rclone copy "s3:sdsu-rosen/skirt_resources/" "/home/jovyan/resources_Raw/"
-            
-            echo "Merging SKIRT resources..."
-            python -c "
-            import os, shutil
-            raw_dir = '/home/jovyan/resources_Raw'
-            dest_dir = '/home/jovyan/resources'
-            os.makedirs(dest_dir, exist_ok=True)
-            for pack in os.listdir(raw_dir):
-                pack_path = os.path.join(raw_dir, pack)
-                if os.path.isdir(pack_path):
-                    for category in os.listdir(pack_path):
-                        cat_path = os.path.join(pack_path, category)
-                        if os.path.isdir(cat_path):
-                            shutil.copytree(cat_path, os.path.join(dest_dir, category), dirs_exist_ok=True)
-            "
-            
-            # THE MAGIC KEY: Telling SKIRT where to find the data
-            export SKIRT_DATA_PATH=/home/jovyan/resources
+            echo "=== STEP 1: ROUTING RESOURCES TO SKIRT ==="
+            cd /home/jovyan
+            mkdir -p /home/jovyan/SKIRT
+            ln -s /home/jovyan/resources /home/jovyan/SKIRT/resources
             
             echo "=== STEP 2: CLONING REPOSITORIES ==="
             git clone https://github.com/SKIRT/PTS9.git /home/jovyan/PTS9
             git clone https://github.com/AislingA/S2S.git /home/jovyan/S2S
+            ln -s /home/jovyan/resources /home/jovyan/S2S/resources
             
             echo "=== STEP 3: SETTING UP ENVIRONMENT ==="
             cd /home/jovyan/S2S
@@ -58,18 +39,15 @@ spec:
               OUT_DIR="/data/outputs/snapshot_${snap}"
               mkdir -p "${OUT_DIR}"
 
-              echo "--> 1. Downloading raw snapshot to temporary scratch space..."
+              echo "--> 1. Downloading raw snapshot from S3 to temporary scratch space..."
               rclone copy "s3:sdsu-rosen/snapshot_${snap}.hdf5" /tmp/
 
-              echo "--> 2. Running S2S & SKIRT..."
+              echo "--> 2. Running pipeline (Reading from /tmp, Saving to /data)..."
               python src/runner/run_sim.py \
                 --input "/tmp/snapshot_${snap}.hdf5" \
                 --output-dir "${OUT_DIR}"
 
-              echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
-              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/snapshot_${snap}/"
-
-              echo "--> 4. Cleaning up raw snapshot to free memory..."
+              echo "--> 3. Cleaning up! Deleting raw snapshot to free memory..."
               rm "/tmp/snapshot_${snap}.hdf5"
 
               echo "Completed snapshot_${snap} successfully!"

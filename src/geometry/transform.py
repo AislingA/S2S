@@ -48,9 +48,7 @@ def apply_rotation(coords, masses=None, basis=None):
     provided, it calculates one using the mass-weighted covariance matrix.
 
     The mass-weighted covariance matrix $C$ is diagonalized to find the principal axes:
-    $ C \vec{v} = \lambda \vec{v} $
     The coordinates are then transformed into the new basis $R$:
-    $ \vec{r}_{\rm rot} = \vec{r}' \cdot R $
 
     Parameters
     ----------
