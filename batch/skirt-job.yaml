@@ -62,7 +62,7 @@ spec:
               rclone copy "s3:sdsu-rosen/snapshot_${snap}.hdf5" /tmp/
 
               echo "--> 2. Running S2S & SKIRT..."
-              python src/runner/run_sim.py \
+              python -u src/runner/run_sim.py \
                 --input "/tmp/snapshot_${snap}.hdf5" \
                 --output-dir "${OUT_DIR}"
 
