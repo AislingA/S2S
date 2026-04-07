@@ -100,8 +100,14 @@ def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
         # Radiative Transfer Execution (PTS9)
         print('\n--- Executing SKIRT Simulation ---')
         skirt = sm.Skirt()
+
+        original_dir = os.getcwd()
+        os.chdir(out_dir)
+
         # 'brief' console mode prevents the terminal from being overwhelmed by photon tracking logs
         sim = skirt.execute(ski_output, console='brief')
+
+        os.chdir(original_dir)
 
         elapsed = time.time() - start_time
         print(f"\nPipeline complete. Execution time: {elapsed:.2f} seconds")
