@@ -51,7 +51,7 @@ dust_settings:
     # NOTE: Uncomment exactly ONE of the DUST_MIX_CONFIG blocks below
 
     # Option 1: Draine & Li 2007 (Standard MW)
-    # DUST_MIX_CONFIG: '<DraineLiDustMix numSilicateSizes="5" numGraphiteSizes="5" numPAHSizes="5"/>'
+    DUST_MIX_CONFIG: '<DraineLiDustMix numSilicateSizes="5" numGraphiteSizes="5" numPAHSizes="5"/>'
     
     # Option 2: THEMIS (Jones et al. 2017)
     # DUST_MIX_CONFIG: '<ThemisDustMix numSilicateSizes="5" numHydrocarbonSizes="5"/>'

@@ -65,9 +65,10 @@ spec:
               python -u src/runner/run_sim.py \
                 --input "/tmp/snapshot_${snap}.hdf5" \
                 --output-dir "${OUT_DIR}"
+                --percentage 0.25
 
               echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
-              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/snapshot_${snap}/"
+              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/draine_025/snapshot_${snap}/"
 
               echo "--> 4. Cleaning up raw snapshot to free memory..."
               rm "/tmp/snapshot_${snap}.hdf5"
