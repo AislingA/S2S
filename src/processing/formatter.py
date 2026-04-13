@@ -55,7 +55,7 @@ def get_intrinsic_luminosity(pt5_data, f_acc=0.75):
     L_acc_Lsun[valid] = L_acc_W / c.L_sun
     
     # Subtract accretion luminosity from total to get intrinsic, floor at 0
-    return np.clip(L_tot - L_acc_Lsun, 0, None)
+    return np.clip(L_tot - L_acc_Lsun, 0, None), L_acc_Lsun
 
 def compute_stellar_temperature(luminosity, star_radius):
     """
@@ -120,7 +120,7 @@ def format_source_file(pt5_data, output_path, verbose=False):
     str
         The path to the created source input file.
     """
-    intrinsic_lums = get_intrinsic_luminosity(pt5_data)
+    intrinsic_lums, _ = get_intrinsic_luminosity(pt5_data)
     # Filter out sinks with zero radius or zero intrinsic luminosity
     valid_mask = (pt5_data['ProtoStellarRadius_inSolar'] > 0) & (intrinsic_lums > 0)
     
@@ -149,6 +149,45 @@ def format_source_file(pt5_data, output_path, verbose=False):
     ])
 
     print_stats("Source", pt5_data, verbose)
+
+    # Write to file with SKIRT-compatible header
+    header = "# x(pc) y(pc) z(pc) h(pc) R(km) T(K)"
+    np.savetxt(output_path, export_data, fmt='%.6e', header=header, comments='')
+    
+    return output_path
+
+def format_accretion_file(pt5_data, output_path, verbose=False):
+    """
+    """
+    _, accretion_lums = get_intrinsic_luminosity(pt5_data)
+    # Filter out sinks with zero radius or zero intrinsic luminosity
+    valid_mask = (pt5_data['ProtoStellarRadius_inSolar'] > 0) & (accretion_lums > 0)
+    
+    clean_lums = accretion_lums[valid_mask]
+    clean_radii = pt5_data['ProtoStellarRadius_inSolar'][valid_mask]
+    clean_coords = pt5_data['Coordinates'][valid_mask]
+    clean_h = pt5_data['BH_AccretionLength'][valid_mask]
+
+    if verbose and len(clean_lums) < len(pt5_data['StarLuminosity_Solar']):
+        print(f"Warning: Dropped {len(pt5_data['StarLuminosity_Solar']) - len(clean_lums)} sinks with 0 radius/luminosity to prevent SKIRT crash.")
+
+    # Deriving effective temperature for SED assignment.
+    temp = compute_stellar_temperature(clean_lums, clean_radii)
+
+    # Structure data for SKIRT: x, y, z, h, R, T
+    # Converting solar radii to kilometers (SKIRT standard unit for radius)
+    radius_km = clean_radii * c.R_sun * c.m_to_km
+
+    export_data = np.column_stack([
+        clean_coords[:, 0],
+        clean_coords[:, 1],
+        clean_coords[:, 2],
+        clean_h,
+        radius_km,
+        temp
+    ])
+
+    print_stats("Accretion Source", pt5_data, verbose)
 
     # Write to file with SKIRT-compatible header
     header = "# x(pc) y(pc) z(pc) h(pc) R(km) T(K)"

@@ -18,7 +18,7 @@ import PTS9.simulation as sm
 # Internal pipeline imports
 from file_io.loader import load_snapshot, get_header_data, get_particle_data, filter_by_id
 from geometry.transform import finalize_dataset
-from processing.formatter import format_source_file, format_gas_file
+from processing.formatter import format_source_file, format_accretion_file, format_gas_file
 from config.writer import get_default_replacements, apply_yaml_replacements
 
 def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
@@ -72,11 +72,15 @@ def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
         base_name = os.path.basename(snapshot_path).replace('.hdf5', '')
         
         src_path = os.path.join(out_dir, f"{base_name}_src.txt")
+        acc_path = os.path.join(out_dir, f"{base_name}_acc.txt")
         gas_path = os.path.join(out_dir, f"{base_name}_gas.txt")
         ski_output = os.path.join(out_dir, f"{base_name}.ski")
 
         # Export stellar sources with derived intrinsic luminosities/temperatures
         format_source_file(pt5, src_path, verbose=verbose)
+
+        # Export accretion sources
+        format_accretion_file(pt5, acc_path, verbose=verbose)
         
         # Export gas medium and capture the spatial bounding box
         gas_info = format_gas_file(pt0, gas_path, verbose=verbose)
@@ -123,7 +127,8 @@ if __name__ == "__main__":
     # !!! Add in the sections here to do the four percentages
     parser.add_argument("--input", required=True, help="Path to the raw STARFORGE .hdf5 snapshot.")
     parser.add_argument("--output-dir", required=True, help="Directory to save all output files.")
+    parser.add_argument("--percentage", type=float, default=1.0, help="Fraction of the simulation box to extract.")
     
     args = parser.parse_args()
 
-    run_pipeline(snapshot_path=args.input, out_dir=args.output_dir, percentage=1.0)
+    run_pipeline(snapshot_path=args.input, out_dir=args.output_dir, percentage=args.percentage)
