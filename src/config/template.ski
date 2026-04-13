@@ -108,7 +108,7 @@
                         </wavelengthGrid>
                     </FullInstrument>
 
-                    <FullInstrument instrumentName="logwaves_far_faceon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="logwaves_far_edgeon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
@@ -225,6 +225,7 @@
                         </wavelengthGrid>
                     </FullInstrument>
                     <FullInstrument instrumentName="jwst_far_edgeon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                        <wavelengthGrid type="WavelengthGrid">    
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
                                     <BroadBand bandName="JWST_NIRCAM_F090W"/>
@@ -306,12 +307,12 @@
 
                     <DensityProbe probeName="densityprobe_faceon" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_FACEONE" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                          <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </DensityProbe>
                     <DensityProbe probeName="densityprobe_edgeon" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_EDGEONE" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                          <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </DensityProbe>
                     
