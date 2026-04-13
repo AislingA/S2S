@@ -98,7 +98,7 @@ def run_pipeline(snapshot_path, out_dir, percentage=1.0, verbose=True):
         yaml_path = os.path.join(src_dir, 'config', 'replacements.yaml')
 
         # Map dynamic bounds and apply user-defined physics from YAML
-        replacements = get_default_replacements(src_path, gas_path, bounds)
+        replacements = get_default_replacements(src_path, acc_path, gas_path, bounds)
         apply_yaml_replacements(template_path, ski_output, replacements, yaml_path)
         
         # Radiative Transfer Execution (PTS9)

@@ -28,7 +28,7 @@ def load_config(yaml_path):
     with open(yaml_path, 'r') as f:
         return yaml.safe_load(f)
 
-def get_default_replacements(src_file, gas_file, bounds):
+def get_default_replacements(src_file, acc_file, gas_file, bounds):
     """
     Calculates the spatial bounding box and field of view for SKIRT instruments 
     based on the transformed STARFORGE particle data.
@@ -37,6 +37,8 @@ def get_default_replacements(src_file, gas_file, bounds):
     ----------
     src_file: str
         Path to the formatted stellar source text file.
+    acc_file: str
+        Path to the formatted accretion source text file.
     gas_file: str
         Path to the formatted gas medium text file.
     bounds: tuple
@@ -60,6 +62,7 @@ def get_default_replacements(src_file, gas_file, bounds):
     
     return {
         "SOURCEFILE": src_file,
+        "ACCRETIONFILE": acc_file,
         "GASFILE": gas_file,
         "XMIN": f"{xmin} pc",
         "XMAX": f"{xmax} pc",
