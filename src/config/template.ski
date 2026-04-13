@@ -224,7 +224,7 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="jwst_far_edgeon" distance="DISTANCE_FAR" inclination="INC_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="jwst_far_edgeon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
                                     <BroadBand bandName="JWST_NIRCAM_F090W"/>

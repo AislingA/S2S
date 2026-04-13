@@ -64,7 +64,7 @@ spec:
               echo "--> 2. Running S2S & SKIRT..."
               python -u src/runner/run_sim.py \
                 --input "/tmp/snapshot_${snap}.hdf5" \
-                --output-dir "${OUT_DIR}"
+                --output-dir "${OUT_DIR}" \
                 --percentage 0.25
 
               echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
