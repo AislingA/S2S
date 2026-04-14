@@ -3,7 +3,7 @@
 import numpy as np
 import warnings
 from astropy.convolution import convolve, Gaussian2DKernel
-from astropy.visualization import PercentileInterval, ImageNormalize, AsinhStretch
+from astropy.visualization import AsymmetricPercentileInterval, ImageNormalize, AsinhStretch
 
 def apply_psf(rgb_cube, fwhm_pixels=2.1, instrument="optical_uv"):
     """
@@ -57,7 +57,7 @@ def apply_asinh_stretch(rgb_cube, lower_pct=1.0, upper_pct=98.0, a_param=0.01):
             
         # Isolate positive values to calculate percentiles accurately, ignoring empty space
         positive_data = band_data[band_data > 0]
-        interval = PercentileInterval(lower_pct, upper_pct)
+        interval = AsymmetricPercentileInterval(lower_pct, upper_pct)
         vmin, vmax = interval.get_limits(positive_data)
         
         # Create the normalization object using your custom Asinh logic
