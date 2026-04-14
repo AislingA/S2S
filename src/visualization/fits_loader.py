@@ -37,8 +37,8 @@ def load_rgb_datacube(fits_path, instrument="optical_uv"):
         # template.ski: JOHNSON_I (6), JOHNSON_V (4), JOHNSON_B (3)
         r_idx, g_idx, b_idx = 6, 4, 3
     elif instrument == "jwst":
-        # template.ski: F200W (2), F150W (1), F090W (0)
-        r_idx, g_idx, b_idx = 2, 1, 0
+        # template.ski: (F444W, F200W, F090W)
+        r_idx, g_idx, b_idx = 6, 2, 0
     else:
         raise ValueError(f"Instrument '{instrument}' not supported. Use 'optical_uv' or 'jwst'.")
 

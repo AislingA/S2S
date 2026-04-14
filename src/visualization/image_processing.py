@@ -9,6 +9,10 @@ def apply_psf(rgb_cube, fwhm_pixels=2.1, instrument="optical_uv"):
     """
     Convolves the raw physical flux arrays with a Point Spread Function (PSF).
     """
+    # Allow bypassing the PSF to check pristine dust structures
+    if fwhm_pixels <= 0:
+        return rgb_cube
+
     sigma = fwhm_pixels / 2.35482
     kernel = Gaussian2DKernel(x_stddev=sigma)
     convolved_cube = np.zeros_like(rgb_cube)
@@ -21,60 +25,36 @@ def apply_psf(rgb_cube, fwhm_pixels=2.1, instrument="optical_uv"):
             
     return convolved_cube
 
-def apply_asinh_stretch(rgb_cube, lower_pct=1.0, upper_pct=98.0, a_param=0.01):
+def aggressive_scale(band_data, lower_pct=1.0, upper_pct=98.0):
     """
-    Applies an aggressive Asinh stretch to each color channel independently 
-    to reveal faint dust structures by deliberately saturating bright point sources.
-    
-    Parameters
-    ----------
-    rgb_cube: numpy.ndarray
-        The (3, Y, X) array containing the convolved physical fluxes.
-    lower_pct: float
-        The lower percentile limit for the noise floor.
-    upper_pct: float
-        The upper percentile limit to saturate bright pixels.
-    a_param: float
-        The alpha parameter for the Asinh curve transition.
+    Exact replica of the old scaling logic, adapted to safely handle the interval bounds.
+    """
+    if not np.any(band_data > 0):
+        return np.zeros_like(band_data)
 
-    Returns
-    -------
-    rgb_image: numpy.ndarray
-        A (Y, X, 3) array normalized between 0.0 and 1.0, ready for plotting.
+    # Uses Asymmetric to correctly respect both your lower and upper bounds
+    interval = AsymmetricPercentileInterval(lower_pct, upper_pct)
+    vmin, vmax = interval.get_limits(band_data[band_data > 0])
+    
+    # Hardcoded a=0.01 as it was in your old script
+    norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=AsinhStretch(a=0.01))
+    scaled = norm(band_data)
+    
+    # No np.clip() here. We let Matplotlib natively handle values > 1.0
+    return np.ma.filled(scaled, 0)
+
+def apply_asinh_stretch(rgb_cube, lower_pct=1.0, upper_pct=98.0):
+    """
+    Applies the aggressive astronomical stretch independently to the cube.
     """
     print(f"Applying independent Asinh stretch (Percentiles: {lower_pct}-{upper_pct}%)...")
     
-    stretched_channels = []
+    # Process Red, Green, and Blue exactly as the old code did
+    r_band = aggressive_scale(rgb_cube[0], lower_pct, upper_pct)
+    g_band = aggressive_scale(rgb_cube[1], lower_pct, upper_pct)
+    b_band = aggressive_scale(rgb_cube[2], lower_pct, upper_pct)
     
-    # Process Red, Green, and Blue independently to maximize structural contrast
-    for i in range(3):
-        band_data = rgb_cube[i]
-        
-        # Safety check: if the channel is completely empty, return zeros
-        if not np.any(band_data > 0):
-            stretched_channels.append(np.zeros_like(band_data))
-            continue
-            
-        # Isolate positive values to calculate percentiles accurately, ignoring empty space
-        positive_data = band_data[band_data > 0]
-        interval = AsymmetricPercentileInterval(lower_pct, upper_pct)
-        vmin, vmax = interval.get_limits(positive_data)
-        
-        # Create the normalization object using your custom Asinh logic
-        norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=AsinhStretch(a=a_param))
-        
-        # Apply the normalization to the full band data
-        scaled = norm(band_data)
-        
-        # Astropy normalizations return MaskedArrays. Fill masked values with 0.
-        filled_scaled = np.ma.filled(scaled, 0)
-        
-        # Final safety clip strictly between 0.0 and 1.0
-        clipped = np.clip(filled_scaled, 0, 1)
-        stretched_channels.append(clipped)
-        
-    # np.dstack takes a list of 2D arrays and stacks them along the 3rd axis
-    # turning the three (Y, X) arrays into the (Y, X, 3) image for Matplotlib
-    rgb_image = np.dstack(stretched_channels)
+    # Turn the three (Y, X) arrays into the (Y, X, 3) image
+    rgb_image = np.dstack((r_band, g_band, b_band))
     
     return rgb_image
