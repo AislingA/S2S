@@ -4,7 +4,7 @@ import os
 import argparse
 import matplotlib.pyplot as plt
 from fits_loader import load_rgb_datacube
-from image_processing import apply_psf, apply_log_stretch
+from image_processing import apply_psf, apply_asinh_stretch
 
 def build_file_paths(snapshot, batch_job, instrument="optical_uv", base_dir="../../outputs/data"):
     """
@@ -26,7 +26,7 @@ def build_file_paths(snapshot, batch_job, instrument="optical_uv", base_dir="../
     }
     return paths
 
-def create_2x2_mock_observation(file_paths, snapshot, batch_job, instrument="optical_uv", stretch_factor=1000, fwhm=2.1, out_dir='../../outputs/figures'):
+def create_2x2_mock_observation(file_paths, snapshot, batch_job, instrument="optical_uv", fwhm=2.1, out_dir='../../outputs/figures'):
     """
     Orchestrates the loading, processing, and plotting of 4 SKIRT simulations 
     into a single 2x2 synthetic observation grid.
@@ -67,8 +67,7 @@ def create_2x2_mock_observation(file_paths, snapshot, batch_job, instrument="opt
             # Extract raw flux, apply PSF convolution, and apply log stretch
             raw_cube = load_rgb_datacube(filepath, instrument=instrument)
             smoothed_cube = apply_psf(raw_cube, fwhm_pixels=fwhm, instrument=instrument)
-            final_rgb_image = apply_log_stretch(smoothed_cube, stretch_factor=stretch_factor)
-            
+            final_rgb_image = apply_asinh_stretch(smoothed_cube, lower_pct=1.0, upper_pct=98.0)            
             # Render image
             ax.imshow(final_rgb_image, origin='lower')
             
@@ -114,6 +113,5 @@ if __name__ == "__main__":
         snapshot=args.snapshot,
         batch_job=args.job,
         instrument=args.instrument,
-        stretch_factor=args.stretch,
         fwhm=args.fwhm
     )
