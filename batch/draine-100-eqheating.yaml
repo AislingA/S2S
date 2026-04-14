@@ -1,8 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  # [1] JOB NAME: Change this to a unique name for your run (e.g., skirt-themis-50)
-  name: skirt-batch-job-[RUN_NAME]
+  name: skirt-draine-100-eqheating
   namespace: sdsu-rosen-astro-group
 spec:
   backoffLimit: 0
@@ -19,7 +18,6 @@ spec:
             echo "=== STEP 1: DOWNLOADING SKIRT RESOURCES ==="
             export HOME=/home/jovyan
             
-            # Download and merge the SKIRT filters/resources from S3
             mkdir -p /home/jovyan/resources_Raw
             rclone copy "s3:sdsu-rosen/skirt_resources/" "/home/jovyan/resources_Raw/"
             
@@ -41,7 +39,6 @@ spec:
             export SKIRT_DATA_PATH=/home/jovyan/resources
             
             echo "=== STEP 2: CLONING REPOSITORIES ==="
-            # This pulls the latest code from your GitHub! Ensure replacements.yaml is updated online.
             git clone https://github.com/SKIRT/PTS9.git /home/jovyan/PTS9
             git clone https://github.com/AislingA/S2S.git /home/jovyan/S2S
             
@@ -50,7 +47,6 @@ spec:
             export PYTHONPATH=$PYTHONPATH:/home/jovyan/S2S/src:/home/jovyan:/home/jovyan/PTS9
 
             echo "=== STEP 4: RUNNING SIMULATIONS ==="
-            # [2] SNAPSHOTS: Add or remove the snapshot numbers you want to process in this run
             SNAPSHOTS=(150 200 250 296)
             
             for snap in "${SNAPSHOTS[@]}"; do
@@ -64,15 +60,13 @@ spec:
               rclone copy "s3:sdsu-rosen/snapshot_${snap}.hdf5" /tmp/
 
               echo "--> 2. Running S2S & SKIRT..."
-              # [3] PERCENTAGE: Change the float value to set your box extraction size (e.g., 0.50, 1.0)
               python -u src/runner/run_sim.py \
                 --input "/tmp/snapshot_${snap}.hdf5" \
                 --output-dir "${OUT_DIR}" \
-                --percentage [PERCENTAGE_VALUE]
+                --percentage 1.0
 
               echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
-              # [4] S3 ROUTING: Change the folder name so this run doesn't overwrite your other data
-              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/[FOLDER_NAME]/snapshot_${snap}/"
+              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/draine_100_eqheating/snapshot_${snap}/"
 
               echo "--> 4. Cleaning up raw snapshot to free memory..."
               rm "/tmp/snapshot_${snap}.hdf5"
@@ -80,9 +74,8 @@ spec:
               echo "Completed snapshot_${snap} successfully!"
             done
             
-            echo "All simulations complete!"
+            echo "All 4 simulations complete!"
 
-        # [5] RESOURCES: If your jobs crash due to OOM (Out of Memory), increase the 128Gi RAM here.
         resources:
           limits:
             memory: "128Gi"
