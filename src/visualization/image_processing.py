@@ -3,7 +3,7 @@
 import numpy as np
 import warnings
 from astropy.convolution import convolve, Gaussian2DKernel
-from astropy.visualization import AsymmetricPercentileInterval, ImageNormalize, AsinhStretch
+from astropy.visualization import PercentileInterval, ImageNormalize, AsinhStretch
 
 def apply_psf(rgb_cube, fwhm_pixels=2.1, instrument="optical_uv"):
     """
@@ -33,7 +33,7 @@ def aggressive_scale(band_data, lower_pct=1.0, upper_pct=98.0):
         return np.zeros_like(band_data)
 
     # Uses Asymmetric to correctly respect both your lower and upper bounds
-    interval = AsymmetricPercentileInterval(lower_pct, upper_pct)
+    interval = PercentileInterval(lower_pct, int(upper_pct))
     vmin, vmax = interval.get_limits(band_data[band_data > 0])
     
     # Hardcoded a=0.01 as it was in your old script
