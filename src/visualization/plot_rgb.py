@@ -80,7 +80,8 @@ def create_2x2_mock_observation(file_paths, snapshot, batch_job, instrument="opt
     os.makedirs(out_dir, exist_ok=True)
     # Dynamically name the output file based on snapshot and instrument
     output_filename = f"syn_obs_{batch_job}_snap{snapshot}_{instrument}.png"
-    plt.savefig(output_filename, dpi=300, facecolor='black', edgecolor='none')
+    output_path = os.path.join(out_dir, output_filename)
+    plt.savefig(output_path, dpi=300, facecolor='black', edgecolor='none')
     print(f"\nSuccess! Grid saved as {output_filename}")
     plt.show()
 
