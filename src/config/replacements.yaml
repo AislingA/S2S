@@ -39,9 +39,9 @@ dust_emission_settings:
     # "Stochastic" for transiently heated small grains (PAHs), "Equilibrium" for fast, thermal only
     DUST_EMISSION_TYPE: "Equilibrium"
     # og 24, 4
-    # 4/13 changing to 40, 10 due to adding in accretion particle source
+    # 4/13 changing to 40
     MAX_ITERATIONS: "40"
-    ITERATION_MULTIPLIER: "10"
+    ITERATION_MULTIPLIER: "2"
 
 particle_medium_settings:
     # Typically 0.01 for Milky Way ISM
