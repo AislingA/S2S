@@ -8,6 +8,48 @@ from __future__ import annotations
 
 import re
 
+KNOWN_TEMPLATE_PLACEHOLDERS = {
+    "USERLEVEL",
+    "SIMULATIONMODE",
+    "ITERATE_PRIMARY",
+    "ITERATE_SECONDARY",
+    "NUMPACKETS",
+    "RANDOM_SEED",
+    "MIN_WAVELENGTH",
+    "MAX_WAVELENGTH",
+    "NUM_WAVELENGTHS",
+    "SOURCEFILE",
+    "ACCRETIONFILE",
+    "FORCE_SCATTERING",
+    "STORE_RAD_FIELD",
+    "DUST_EMISSION_TYPE",
+    "MAX_ITERATIONS",
+    "ITERATION_MULTIPLIER",
+    "GASFILE",
+    "DUST_TO_GAS_RATIO",
+    "MAX_DUST_TEMP",
+    "DUST_MIX_CONFIG",
+    "XMIN",
+    "XMAX",
+    "YMIN",
+    "YMAX",
+    "ZMIN",
+    "ZMAX",
+    "MINLEVEL",
+    "MAXLEVEL",
+    "FOVX",
+    "FOVY",
+    "DISTANCE_NEAR",
+    "DISTANCE_FAR",
+    "INCLINATION_FACEON",
+    "INCLINATION_EDGEON",
+    "AZIMUTH",
+    "ROLL",
+    "NUMPIXELSX",
+    "NUMPIXELSY",
+}
+
+
 
 def load_config(yaml_path: str) -> dict:
     """
@@ -118,8 +160,11 @@ def collect_template_placeholders(template_text: str) -> set[str]:
     set[str]
         Set of placeholder names found in the template.
     """
-    placeholder_pattern = re.compile(r"\b[A-Z][A-Z0-9_]+\b")
-    return set(placeholder_pattern.findall(template_text))
+    return {
+        placeholder
+        for placeholder in KNOWN_TEMPLATE_PLACEHOLDERS
+        if placeholder in template_text
+    }
 
 
 def render_template(
