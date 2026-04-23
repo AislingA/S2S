@@ -21,8 +21,6 @@
                             <DefaultWavelengthDistribution/>
                         </wavelengthBiasDistribution>
                     </ParticleSource>
-                </sources>
-                <sources type="Source">
                     <ParticleSource filename="ACCRETIONFILE" importVelocity="false" importVelocityDispersion="false" importCurrentMass="false" useColumns="" sourceWeight="1" wavelengthBias="0.5">
                         <smoothingKernel type="SmoothingKernel">
                             <UniformSmoothingKernel/>
@@ -90,30 +88,22 @@
 <instrumentSystem type="InstrumentSystem">
             <InstrumentSystem>
                 <instruments type="Instrument">
-                    <FullInstrument instrumentName="logwaves_near_faceon" distance="DISTANCE_NEAR" inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="logwaves_front" distance="DISTANCE" inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </FullInstrument>
-
-                    <FullInstrument instrumentName="logwaves_near_edgeon" distance="DISTANCE_NEAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="logwaves_top" distance="DISTANCE" inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </FullInstrument>
-
-                    <FullInstrument instrumentName="logwaves_far_faceon" distance="DISTANCE_FAR" inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="logwaves_side" distance="DISTANCE" inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </FullInstrument>
-
-                    <FullInstrument instrumentName="logwaves_far_edgeon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
-                        <wavelengthGrid type="WavelengthGrid">
-                            <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
-                        </wavelengthGrid>
-                    </FullInstrument>
-                    <FullInstrument instrumentName="optical_uv_near_faceon" distance="DISTANCE_NEAR" inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="optical_uv_front" distance="DISTANCE" inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
@@ -128,7 +118,7 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="optical_uv_near_edgeon" distance="DISTANCE_NEAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="optical_uv_top" distance="DISTANCE" inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
@@ -143,7 +133,7 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="optical_uv_far_faceon" distance="DISTANCE_FAR" inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="optical_uv_side" distance="DISTANCE" inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
@@ -158,22 +148,7 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="optical_uv_far_edgeon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
-                        <wavelengthGrid type="WavelengthGrid">
-                            <ConfigurableBandWavelengthGrid>
-                                <bands type="Band">
-                                    <BroadBand bandName="GALEX_GALEX_FUV"/>
-                                    <BroadBand bandName="GALEX_GALEX_NUV"/>
-                                    <BroadBand bandName="JOHNSON_U"/>
-                                    <BroadBand bandName="JOHNSON_B"/>
-                                    <BroadBand bandName="JOHNSON_V"/>
-                                    <BroadBand bandName="JOHNSON_R"/>
-                                    <BroadBand bandName="JOHNSON_I"/>
-                                </bands>
-                            </ConfigurableBandWavelengthGrid>
-                        </wavelengthGrid>
-                    </FullInstrument>
-                    <FullInstrument instrumentName="jwst_near_faceon" distance="DISTANCE_NEAR" inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="jwst_front" distance="DISTANCE" inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
@@ -190,7 +165,7 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="jwst_near_edgeon" distance="DISTANCE_NEAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="jwst_top" distance="DISTANCE" inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
@@ -207,25 +182,8 @@
                             </ConfigurableBandWavelengthGrid>
                         </wavelengthGrid>
                     </FullInstrument>
-                    <FullInstrument instrumentName="jwst_far_faceon" distance="DISTANCE_FAR" inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
+                    <FullInstrument instrumentName="jwst_side" distance="DISTANCE" inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
                         <wavelengthGrid type="WavelengthGrid">
-                            <ConfigurableBandWavelengthGrid>
-                                <bands type="Band">
-                                    <BroadBand bandName="JWST_NIRCAM_F090W"/>
-                                    <BroadBand bandName="JWST_NIRCAM_F150W"/>
-                                    <BroadBand bandName="JWST_NIRCAM_F200W"/>
-                                    <BroadBand bandName="JWST_NIRCAM_F277W"/>
-                                    <BroadBand bandName="JWST_NIRCAM_F322W2"/>
-                                    <BroadBand bandName="JWST_NIRCAM_F356W"/>
-                                    <BroadBand bandName="JWST_NIRCAM_F444W"/>
-                                    <BroadBand bandName="JWST_MIRI_F770W"/>
-                                    <BroadBand bandName="JWST_MIRI_F1500W"/>
-                                </bands>
-                            </ConfigurableBandWavelengthGrid>
-                        </wavelengthGrid>
-                    </FullInstrument>
-                    <FullInstrument instrumentName="jwst_far_edgeon" distance="DISTANCE_FAR" inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc" recordComponents="True" numScatteringLevels="0" recordPolarization="false" recordStatistics="false">
-                        <wavelengthGrid type="WavelengthGrid">    
                             <ConfigurableBandWavelengthGrid>
                                 <bands type="Band">
                                     <BroadBand bandName="JWST_NIRCAM_F090W"/>
@@ -247,48 +205,68 @@
         <probeSystem type="ProbeSystem">
             <ProbeSystem>
                 <probes type="Probe">
-                    <ImportedMediumDensityProbe probeName="mediumdensityprobe_faceon">
+                    <ImportedMediumDensityProbe probeName="mediumdensityprobe_front">
                         <form type="GenericForm">
-                          <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </ImportedMediumDensityProbe>
-                    <ImportedMediumDensityProbe probeName="mediumdensityprobe_edgeon">
+
+                    <ImportedMediumDensityProbe probeName="mediumdensityprobe_top">
                         <form type="GenericForm">
-                          <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </ImportedMediumDensityProbe>
-                    
-                    <ImportedMediumTemperatureProbe probeName="mediumtemperatureprobe_faceon">
+
+                    <ImportedMediumDensityProbe probeName="mediumdensityprobe_side">
                         <form type="GenericForm">
-                          <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </ImportedMediumDensityProbe>
+
+                    <ImportedMediumTemperatureProbe probeName="mediumtemperatureprobe_front">
+                        <form type="GenericForm">
+                        <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </ImportedMediumTemperatureProbe>
-                    <ImportedMediumTemperatureProbe probeName="mediumtemperatureprobe_edgeon">
+                    <ImportedMediumTemperatureProbe probeName="mediumtemperatureprobe_top">
                         <form type="GenericForm">
-                          <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </ImportedMediumTemperatureProbe>
-                    
+                    <ImportedMediumTemperatureProbe probeName="mediumtemperatureprobe_side">
+                        <form type="GenericForm">
+                        <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </ImportedMediumTemperatureProbe>
+
                     <ConvergenceCutsProbe probeName="convergencecutsprobe" probeAfter="Setup"/>
                     <SpatialGridPlotProbe probeName="spatialgridplotprobe"/>
                     
-                    <ImportedSourceLuminosityProbe probeName="sourceluminosityprobe_faceone" convolve="false">
+                    <ImportedSourceLuminosityProbe probeName="sourceluminosityprobe_front" convolve="false">
                         <form type="GenericForm">
-                            <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                            <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </ImportedSourceLuminosityProbe>
-                    <ImportedSourceLuminosityProbe probeName="sourceluminosityprobe_edgeon" convolve="false">
+                    <ImportedSourceLuminosityProbe probeName="sourceluminosityprobe_top" convolve="false">
                         <form type="GenericForm">
-                            <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                            <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </ImportedSourceLuminosityProbe>
-                    
+                    <ImportedSourceLuminosityProbe probeName="sourceluminosityprobe_side" convolve="false">
+                        <form type="GenericForm">
+                            <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
+                        </wavelengthGrid>
+                    </ImportedSourceLuminosityProbe>
+
                     <LuminosityProbe probeName="luminosityprobe">
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
@@ -305,55 +283,79 @@
                     <DustEmissivityProbe probeName="dustemissivityprobe" writeWavelengthGrid="true"/>
                     <InstrumentWavelengthGridProbe probeName="instrumentwavelengthgridprobe"/>
 
-                    <DensityProbe probeName="densityprobe_faceon" aggregation="Type" probeAfter="Run">
+                    <DensityProbe probeName="densityprobe_front" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </DensityProbe>
-                    <DensityProbe probeName="densityprobe_edgeon" aggregation="Type" probeAfter="Run">
+                    <DensityProbe probeName="densityprobe_top" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </DensityProbe>
-                    
-                    <TemperatureProbe probeName="temperatureprobe_faceon" aggregation="Type" probeAfter="Run">
+                    <DensityProbe probeName="densityprobe_side" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </DensityProbe>
+
+                    <TemperatureProbe probeName="temperatureprobe_front" aggregation="Type" probeAfter="Run">
+                        <form type="Form">
+                        <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </TemperatureProbe>
-                    <TemperatureProbe probeName="temperatureprobe_edgeon" aggregation="Type" probeAfter="Run">
+                    <TemperatureProbe probeName="temperatureprobe_top" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </TemperatureProbe>
+                    <TemperatureProbe probeName="temperatureprobe_side" aggregation="Type" probeAfter="Run">
+                        <form type="Form">
+                        <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </TemperatureProbe>
 
-                    <OpacityProbe probeName="opacityprobe_faceon" aggregation="Type" probeAfter="Run">
+                    <OpacityProbe probeName="opacityprobe_front" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                            <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                            <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </OpacityProbe>
-                    <OpacityProbe probeName="opacityprobe_edgeon" aggregation="Type" probeAfter="Run">
+                    <OpacityProbe probeName="opacityprobe_top" aggregation="Type" probeAfter="Run">
                         <form type="Form">
-                            <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                            <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                        <wavelengthGrid type="WavelengthGrid">
+                            <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
+                        </wavelengthGrid>
+                    </OpacityProbe>
+                    <OpacityProbe probeName="opacityprobe_side" aggregation="Type" probeAfter="Run">
+                        <form type="Form">
+                            <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                         <wavelengthGrid type="WavelengthGrid">
                             <LogWavelengthGrid minWavelength="MIN_WAVELENGTH" maxWavelength="MAX_WAVELENGTH" numWavelengths="NUM_WAVELENGTHS"/>
                         </wavelengthGrid>
                     </OpacityProbe>
                     
-                    <RadiationFieldProbe probeName="radiationfieldprobe_faceon" writeWavelengthGrid="true" probeAfter="Run">
+                    <RadiationFieldProbe probeName="radiationfieldprobe_front" writeWavelengthGrid="true" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_FACEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_FRONT" azimuth="AZIMUTH_FRONT" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </RadiationFieldProbe>
-                    <RadiationFieldProbe probeName="radiationfieldprobe_edgeon" writeWavelengthGrid="true" probeAfter="Run">
+                    <RadiationFieldProbe probeName="radiationfieldprobe_top" writeWavelengthGrid="true" probeAfter="Run">
                         <form type="Form">
-                          <ParallelProjectionForm inclination="INCLINATION_EDGEON" azimuth="AZIMUTH" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        <ParallelProjectionForm inclination="INCLINATION_TOP" azimuth="AZIMUTH_TOP" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
                         </form>
                     </RadiationFieldProbe>
+                    <RadiationFieldProbe probeName="radiationfieldprobe_side" writeWavelengthGrid="true" probeAfter="Run">
+                        <form type="Form">
+                        <ParallelProjectionForm inclination="INCLINATION_SIDE" azimuth="AZIMUTH_SIDE" roll="ROLL" fieldOfViewX="FOVX" numPixelsX="NUMPIXELSX" centerX="0 pc" fieldOfViewY="FOVY" numPixelsY="NUMPIXELSY" centerY="0 pc"/>
+                        </form>
+                    </RadiationFieldProbe>
+
                 </probes>
             </ProbeSystem>
         </probeSystem>

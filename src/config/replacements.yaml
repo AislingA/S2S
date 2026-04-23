@@ -8,11 +8,17 @@ global_wavelength_settings:
     NUM_WAVELENGTHS: "150"
 
 global_instrument_angles:
-    DISTANCE_NEAR: "1 kpc"
-    DISTANCE_FAR: "10 kpc"
-    INCLINATION_FACEON: "0 deg"
-    INCLINATION_EDGEON: "90 deg"
-    AZIMUTH: "0 deg"
+    DISTANCE: "1 kpc"
+
+    INCLINATION_FRONT: "0 deg"
+    AZIMUTH_FRONT: "0 deg"
+
+    INCLINATION_TOP: "90 deg"
+    AZIMUTH_TOP: "90 deg"
+
+    INCLINATION_SIDE: "90 deg"
+    AZIMUTH_SIDE: "0 deg"
+
     ROLL: "90 deg"
     NUMPIXELSX: "800"
     NUMPIXELSY: "800"
