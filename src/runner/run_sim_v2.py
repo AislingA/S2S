@@ -118,7 +118,7 @@ def build_skirt_inputs(
     template_path = os.path.join(src_dir, "config", "template.ski")
     yaml_path = os.path.join(src_dir, "config", "replacements.yaml")
 
-    replacements = get_default_replacements(src_path, acc_path, gas_path, bounds)
+    replacements = get_default_replacements(src_path, acc_path, gas_path, bounds, yaml_path)
     render_template(template_path, ski_path, replacements, yaml_path)
 
     output_files = {

@@ -39,6 +39,8 @@ KNOWN_TEMPLATE_PLACEHOLDERS = {
     "MAXLEVEL",
     "FOVX",
     "FOVY",
+    "ZOOM_FOVX",
+    "ZOOM_FOVY",
     "DISTANCE",
     "INCLINATION_FRONT",
     "AZIMUTH_FRONT",
@@ -50,8 +52,6 @@ KNOWN_TEMPLATE_PLACEHOLDERS = {
     "NUMPIXELSX",
     "NUMPIXELSY",
 }
-
-
 
 def load_config(yaml_path: str) -> dict:
     """
@@ -104,7 +104,8 @@ def get_default_replacements(
     src_file: str,
     acc_file: str,
     gas_file: str,
-    bounds: tuple[float, float, float, float, float, float]
+    bounds: tuple[float, float, float, float, float, float],
+    yaml_path: str,
 ) -> dict[str, str]:
     """
     Build runtime replacement values derived from the exported particle tables.
@@ -119,6 +120,8 @@ def get_default_replacements(
         Path to the gas medium file.
     bounds: tuple
         Spatial bounds as (xmin, xmax, ymin, ymax, zmin, zmax).
+    yaml_path: str
+        Path to the YAML config file so zoom settings can be read.
 
     Returns
     -------
@@ -133,6 +136,12 @@ def get_default_replacements(
 
     max_fov = max(dx, dy, dz)
 
+    config_data = load_config(yaml_path)
+    instrument_settings = config_data.get("global_instrument_angles", {})
+
+    zoom_factor = float(instrument_settings.get("ZOOM_FOV_FACTOR", "0.25"))
+    zoom_fov = zoom_factor * max_fov
+
     return {
         "SOURCEFILE": src_file,
         "ACCRETIONFILE": acc_file,
@@ -144,9 +153,10 @@ def get_default_replacements(
         "ZMIN": f"{zmin} pc",
         "ZMAX": f"{zmax} pc",
         "FOVX": f"{max_fov} pc",
-        "FOVY": f"{max_fov} pc"
+        "FOVY": f"{max_fov} pc",
+        "ZOOM_FOVX": f"{zoom_fov} pc",
+        "ZOOM_FOVY": f"{zoom_fov} pc",
     }
-
 
 def collect_template_placeholders(template_text: str) -> set[str]:
     """
@@ -199,14 +209,24 @@ def render_template(
 
     for section, settings in config_data.items():
         if not isinstance(settings, dict):
-            raise ValueError(f"Configuration section '{section}' must contain a dictionary of placeholder settings.")
-        duplicate_keys = set(final_replacements).intersection(settings)
+            raise ValueError(
+                f"Configuration section '{section}' must contain a dictionary of placeholder settings."
+            )
+
+        filtered_settings = {
+            key: value
+            for key, value in settings.items()
+            if key != "ZOOM_FOV_FACTOR"
+        }
+
+        duplicate_keys = set(final_replacements).intersection(filtered_settings)
         if duplicate_keys:
             raise ValueError(
                 "Duplicate replacement keys found while rendering template: "
                 f"{', '.join(sorted(duplicate_keys))}"
             )
-        final_replacements.update(settings)
+
+        final_replacements.update(filtered_settings)
 
     with open(template_path, "r") as f:
         template_text = f.read()

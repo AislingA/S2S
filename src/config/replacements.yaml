@@ -23,6 +23,8 @@ global_instrument_angles:
     NUMPIXELSX: "800"
     NUMPIXELSY: "800"
 
+    ZOOM_FOV_FACTOR: "0.25"
+
 simulation_settings:
     USERLEVEL: "Expert"
     SIMULATIONMODE: "DustEmission"
