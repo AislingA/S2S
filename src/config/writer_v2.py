@@ -244,7 +244,8 @@ def render_template(
         raise ValueError(f"Unused replacement keys not found in template: {', '.join(sorted(unused_replacements))}")
 
     rendered_text = template_text
-    for placeholder, value in final_replacements.items():
+    for placeholder in sorted(final_replacements, key=len, reverse=True):
+        value = final_replacements[placeholder]
         rendered_text = rendered_text.replace(placeholder, str(value))
 
     with open(output_path, "w") as f:
