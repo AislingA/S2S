@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: skirt-draine-100-eqheating
+  name: skirt-draine-100-stochastic
   namespace: sdsu-rosen-astro-group
 spec:
   backoffLimit: 0
@@ -70,7 +70,7 @@ spec:
 
               echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
               # [4] S3 ROUTING: Change the folder name so this run doesn't overwrite your other data
-              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/draine_100_eqheating/snapshot_${snap}/"
+              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/draine_100_stochastic/snapshot_${snap}/"
 
               echo "--> 4. Cleaning up raw snapshot to free memory..."
               rm "/tmp/snapshot_${snap}.hdf5"
