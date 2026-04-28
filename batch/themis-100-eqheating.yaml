@@ -49,6 +49,7 @@ spec:
             export PYTHONPATH=$PYTHONPATH:/home/jovyan/S2S/src:/home/jovyan:/home/jovyan/PTS9
 
             echo "=== STEP 4: RUNNING SIMULATIONS ==="
+            # [2] SNAPSHOTS: Add or remove the snapshot numbers you want to process in this run
             SNAPSHOTS=(150 200 250 296)
             
             for snap in "${SNAPSHOTS[@]}"; do
@@ -62,12 +63,13 @@ spec:
               rclone copy "s3:sdsu-rosen/snapshot_${snap}.hdf5" /tmp/
 
               echo "--> 2. Running S2S & SKIRT..."
-              python -u src/runner/run_sim.py \
+              python -u src/runner/run_sim_v2.py \
                 --input "/tmp/snapshot_${snap}.hdf5" \
                 --output-dir "${OUT_DIR}" \
                 --percentage 1.0
 
               echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
+              # [4] S3 ROUTING: Change the folder name so this run doesn't overwrite your other data
               rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/themis_100_eqheating/snapshot_${snap}/"
 
               echo "--> 4. Cleaning up raw snapshot to free memory..."
@@ -78,6 +80,7 @@ spec:
             
             echo "All simulations complete!"
 
+        # [5] RESOURCES: If your jobs crash due to OOM (Out of Memory), increase the 128Gi RAM here.
         resources:
           limits:
             memory: "128Gi"

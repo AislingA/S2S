@@ -45,9 +45,9 @@ radiation_field_settings:
 
 dust_emission_settings:
     # "Stochastic" for transiently heated small grains (PAHs), "Equilibrium" for fast, thermal only
-    DUST_EMISSION_TYPE: "Stochastic"
+    DUST_EMISSION_TYPE: "Equilibrium"
     MAX_ITERATIONS: "40"
-    ITERATION_MULTIPLIER: "5"
+    ITERATION_MULTIPLIER: "10"
 
 particle_medium_settings:
     # Typically 0.01 for Milky Way ISM
@@ -60,6 +60,9 @@ dust_settings:
 
     # Option 1: Draine & Li 2007 (Standard MW)
     # DUST_MIX_CONFIG: '<DraineLiDustMix numSilicateSizes="5" numGraphiteSizes="5" numPAHSizes="5"/>'
+
+    # Option 2: MRN 1997 Dust Mix
+    # DUST_MIX_CONFIG: '<MRNDustMix numSilicateSizes="5" numGraphiteSizes="5"/>'
     
     # Option 2: THEMIS (Jones et al. 2017)
     DUST_MIX_CONFIG: '<ThemisDustMix numSilicateSizes="5" numHydrocarbonSizes="5"/>'
