@@ -1,0 +1,111 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: skirt-mrn-100-stochastic
+  namespace: sdsu-rosen-astro-group
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: skirt-runner
+        image: ghcr.io/sdsu-research-ci/astro-notebook@sha256:b790987333dac51a8ea777988bc4bf2b5a09f823819b1419beff51f69075b462
+        command: ["/bin/bash", "-c"]
+        args: 
+          - |
+            echo "Initializing Batch Pipeline..."
+
+            echo "=== STEP 1: DOWNLOADING SKIRT RESOURCES ==="
+            export HOME=/home/jovyan
+            
+            # Download and merge the SKIRT filters/resources from S3
+            mkdir -p /home/jovyan/resources_Raw
+            rclone copy "s3:sdsu-rosen/skirt_resources/" "/home/jovyan/resources_Raw/"
+            
+            echo "Merging SKIRT resources..."
+            python -c "
+            import os, shutil
+            raw_dir = '/home/jovyan/resources_Raw'
+            dest_dir = '/home/jovyan/resources'
+            os.makedirs(dest_dir, exist_ok=True)
+            for pack in os.listdir(raw_dir):
+                pack_path = os.path.join(raw_dir, pack)
+                if os.path.isdir(pack_path):
+                    for category in os.listdir(pack_path):
+                        cat_path = os.path.join(pack_path, category)
+                        if os.path.isdir(cat_path):
+                            shutil.copytree(cat_path, os.path.join(dest_dir, category), dirs_exist_ok=True)
+            "
+            
+            export SKIRT_DATA_PATH=/home/jovyan/resources
+            
+            echo "=== STEP 2: CLONING REPOSITORIES ==="
+            # This pulls the latest code from your GitHub! Ensure replacements.yaml is updated online.
+            git clone https://github.com/SKIRT/PTS9.git /home/jovyan/PTS9
+            git clone https://github.com/AislingA/S2S.git /home/jovyan/S2S
+            
+            echo "=== STEP 3: SETTING UP ENVIRONMENT ==="
+            cd /home/jovyan/S2S
+            export PYTHONPATH=$PYTHONPATH:/home/jovyan/S2S/src:/home/jovyan:/home/jovyan/PTS9
+
+            echo "=== STEP 4: RUNNING SIMULATIONS ==="
+            # [2] SNAPSHOTS: Add or remove the snapshot numbers you want to process in this run
+            SNAPSHOTS=(150 200 250 296)
+            
+            for snap in "${SNAPSHOTS[@]}"; do
+              echo "------------------------------------------------"
+              echo "Processing snapshot_${snap}.hdf5"
+              
+              OUT_DIR="/data/outputs/snapshot_${snap}"
+              mkdir -p "${OUT_DIR}"
+
+              echo "--> 1. Downloading raw snapshot to temporary scratch space..."
+              rclone copy "s3:sdsu-rosen/snapshot_${snap}.hdf5" /tmp/
+
+              echo "--> 2. Running S2S & SKIRT..."
+              python -u src/runner/run_sim_v2.py \
+                --input "/tmp/snapshot_${snap}.hdf5" \
+                --output-dir "${OUT_DIR}" \
+                --percentage 1.0
+
+              echo "--> 3. Uploading completed FITS images and outputs directly to S3..."
+              # [4] S3 ROUTING: Change the folder name so this run doesn't overwrite your other data
+              rclone copy "${OUT_DIR}/" "s3:sdsu-rosen/skirt_outputs/mrn_100_stochastic/snapshot_${snap}/"
+
+              echo "--> 4. Cleaning up raw snapshot to free memory..."
+              rm "/tmp/snapshot_${snap}.hdf5"
+
+              echo "Completed snapshot_${snap} successfully!"
+            done
+            
+            echo "All simulations complete!"
+
+        # [5] RESOURCES: If your jobs crash due to OOM (Out of Memory), increase the 128Gi RAM here.
+        resources:
+          limits:
+            memory: "128Gi"
+            cpu: "16"
+          requests:
+            memory: "128Gi"
+            cpu: "16"
+
+        volumeMounts:
+        - name: s2s-storage
+          mountPath: /data
+        - name: rclone-config-volume
+          mountPath: /home/jovyan/.config/rclone
+        - name: skirt-resources
+          mountPath: /opt/SKIRT/resources
+
+      restartPolicy: Never
+
+      volumes:
+      - name: s2s-storage
+        persistentVolumeClaim:
+          claimName: s2s
+      - name: rclone-config-volume
+        secret:
+          secretName: rclone-config
+      - name: skirt-resources
+        persistentVolumeClaim:
+          claimName: skirt-resources

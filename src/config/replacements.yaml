@@ -45,9 +45,9 @@ radiation_field_settings:
 
 dust_emission_settings:
     # "Stochastic" for transiently heated small grains (PAHs), "Equilibrium" for fast, thermal only
-    DUST_EMISSION_TYPE: "Equilibrium"
+    DUST_EMISSION_TYPE: "Stochastic"
     MAX_ITERATIONS: "40"
-    ITERATION_MULTIPLIER: "10"
+    ITERATION_MULTIPLIER: "5"
 
 particle_medium_settings:
     # Typically 0.01 for Milky Way ISM
@@ -62,16 +62,31 @@ dust_settings:
     # DUST_MIX_CONFIG: '<DraineLiDustMix numSilicateSizes="5" numGraphiteSizes="5" numPAHSizes="5"/>'
 
     # Option 2: MRN 1997 Dust Mix
-    # DUST_MIX_CONFIG: '<MRNDustMix numSilicateSizes="5" numGraphiteSizes="5"/>'
-    
-    # Option 2: THEMIS (Jones et al. 2017)
-    DUST_MIX_CONFIG: '<ThemisDustMix numSilicateSizes="5" numHydrocarbonSizes="5"/>'
-    
-    # Option 3: Custom AstroPAH
-    # DUST_MIX_CONFIG: |
-    #     <ConfigurableDustMix>
-    #         <populations type="DustPopulation">
-    #             <GrainSizeDistributionDustPopulation ... />
-    #             <AstroPahDustPopulation ... />
-    #         </populations>
-    #     </ConfigurableDustMix>
+    DUST_MIX_CONFIG: '<MRNDustMix numSilicateSizes="5" numGraphiteSizes="5"/>'
+
+    # Option 3: Mean Interstellar Dust Mix
+    # DUST_MIX_CONFIG: '<MeanInterstellarDustMix/>'
+
+    # Option 4: Ivezic 1D Benchmark Dust Mix (with mean properties)
+    # DUST_MIX_CONFIG:
+
+    # Option 5: Pascucci 2D Benchmark Dust Mix (with mean properties)
+    # DUST_MIX_CONFIG:
+
+    # Option 6: Pinte 2D Benchmark Dust Mix (with mean properties)
+    # DUST_MIX_CONFIG:
+
+    # Option 7: TRUST Benchmark Dust Mix (with mean properties)
+    # DUST_MIX_CONFIG:
+
+    # Option 8: THEMIS (Jones et al. 2017)
+    # DUST_MIX_CONFIG: '<ThemisDustMix numSilicateSizes="5" numHydrocarbonSizes="5"/>'
+
+    # Option 9: TRUST Benchmark Dust Mix
+    # DUST_MIX_CONFIG:
+
+    # Option 10: Weingartner and Draine (2001) Dust Mix
+    # DUST_MIX_CONFIG:
+
+    # Option 11: Zubko (2004) Dust Mix
+    # DUST_MIX_CONFIG:

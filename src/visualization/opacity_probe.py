@@ -290,9 +290,10 @@ def _shared_log_norm(frames: Sequence[np.ndarray]):
     for frame in frames:
         values = np.asarray(frame)
         positive_values.append(values[values > 0])
-    positive = np.concatenate([values for values in positive_values if values.size])
-    if positive.size == 0:
+    positive_values = [values for values in positive_values if values.size]
+    if not positive_values:
         return None
+    positive = np.concatenate(positive_values)
     return _colors().LogNorm(vmin=float(np.nanmin(positive)), vmax=float(np.nanmax(positive)))
 
 
